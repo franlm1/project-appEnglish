@@ -15,7 +15,7 @@ class Menu extends State<MenuLateral> {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
-        children:  [
+        children: [
           const DrawerHeader(
             child: Text(
               "Alex",
@@ -35,16 +35,20 @@ class Menu extends State<MenuLateral> {
                 color: Colors.black,
               ),
               title: const Text('Inicio'),
-              onTap: () => Navigator.pop(context, Animation_route(MyApp()))
-              ),  
-        ListTile(
+              onTap: () { Navigator.push(context, Animation_route(MyApp()))
+              .whenComplete(() => Navigator.of(context).pop());
+              }),
+  
+          ListTile(
               leading: const Icon(
                 Icons.person,
                 color: Colors.black,
               ),
               title: const Text('Registrar'),
-              onTap: () => Navigator.push(context, Animation_route(AddAlumno()))
-              ),
+              onTap: () {
+                Navigator.push(context, Animation_route(AddAlumno()))
+                    .whenComplete(() => Navigator.of(context).pop());
+              }),
         ],
       ),
     );

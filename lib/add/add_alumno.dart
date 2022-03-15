@@ -44,7 +44,8 @@ class HomePage extends StatelessWidget {
                   color: Colors.black,
                 ),
                 onTap: () {
-                  Navigator.push(context, Animation_route(MyApp()));
+                  Navigator.push(context, Animation_route(MyApp()))
+                      .whenComplete(() => Navigator.of(context).pop());
                 }),
             SizedBox(width: 10),
           ],
@@ -55,20 +56,36 @@ class HomePage extends StatelessWidget {
 }
 
 class AlumnoForm extends StatefulWidget {
-
-
   @override
   AlumnoFormState createState() => AlumnoFormState();
 }
 
 class AlumnoFormState extends State<AlumnoForm> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return ListView(
-    
-      
+    return Form(
+      key: _formKey,
+      child: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 3.0,horizontal: 10.0),
+            child: Column(
+              children: [
+                Card( 
+                  semanticContainer: true,
+                  child: Image.network(
+                  'https://scontent.falc1-1.fna.fbcdn.net/v/t1.18169-9/58675_334588940027861_6571281867888589763_n.png?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=yijQMh_P2tUAX-LfYtY&_nc_ht=scontent.falc1-1.fna&oh=00_AT8l5Kmk7i2FoW27Fvpp8B2aF4aivTFxcefk2mR3h8tpfA&oe=6257FF2E',
+                  fit: BoxFit.fill,
+                  
+                ),
+                elevation:0,
+                margin: EdgeInsets.all(10),
+                  ),
+              ]), 
+            ),
+        ],
+      ),
     );
-      
-   
   }
 }
