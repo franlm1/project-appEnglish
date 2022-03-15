@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'list/list_user.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+
 
   // This widget is the root of your application.
   @override
@@ -37,11 +37,8 @@ class HomePageMain extends StatefulWidget {
 class _SearchListState extends State<HomePageMain> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
-      body: ListUser() ,
-
+      body: ListUser(),
     );
   }
 }
