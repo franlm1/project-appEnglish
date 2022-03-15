@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tuttorial_1/add/add_alumno.dart';
 
 import '../main.dart';
 import 'animation_route.dart';
@@ -15,7 +16,7 @@ class Menu extends State<MenuLateral> {
       child: ListView(
         padding: EdgeInsets.zero,
         children:  [
-          DrawerHeader(
+          const DrawerHeader(
             child: Text(
               "Alex",
               style: TextStyle(
@@ -29,12 +30,21 @@ class Menu extends State<MenuLateral> {
             ),
           ),
           ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.home,
                 color: Colors.black,
               ),
-              title: Text('Inicio'),
-              onTap: () => Navigator.pop(context, Animation_route(MyApp()))),
+              title: const Text('Inicio'),
+              onTap: () => Navigator.pop(context, Animation_route(MyApp()))
+              ),  
+        ListTile(
+              leading: const Icon(
+                Icons.person,
+                color: Colors.black,
+              ),
+              title: const Text('Registrar'),
+              onTap: () => Navigator.push(context, Animation_route(AddAlumno()))
+              ),
         ],
       ),
     );

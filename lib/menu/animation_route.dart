@@ -4,7 +4,7 @@ class Animation_route extends PageRouteBuilder {
   final Widget widget;
   Animation_route(this.widget)
       : super(
-            transitionDuration: Duration(
+            transitionDuration: const Duration(
                 days: 0,
                 hours: 0,
                 minutes: 0,
