@@ -1,7 +1,13 @@
+// ignore_for_file: deprecated_member_use
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/main.dart';
 import 'package:tuttorial_1/menu/menu_lateral.dart';
+
 
 import '../menu/animation_route.dart';
 
@@ -146,7 +152,19 @@ class AlumnoFormState extends State<AlumnoForm> {
                   borderSide: const BorderSide(),
                 ),
               ),
-              validator: validateEmail,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor ingrese el email';
+                } else {
+                  final RegExp regex = RegExp(
+                      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+
+                  if (regex.hasMatch(value)) {
+                  } else {
+                    return 'Invalid Email';
+                  }
+                }
+              },
               controller: email,
             ),
           ),
@@ -165,7 +183,17 @@ class AlumnoFormState extends State<AlumnoForm> {
                   borderSide: const BorderSide(),
                 ),
               ),
-              validator: validatePassword,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor ingrese el password';
+                } else {
+                  if (6 > value.length) {
+                     return 'mayor de 6 caracteres';
+                  } else {
+                   
+                  }
+                }
+              },
               controller: password,
             ),
           ),
@@ -176,8 +204,8 @@ class AlumnoFormState extends State<AlumnoForm> {
               minWidth: 200.0,
               height: 60.0,
               onPressed: () {
-                if (_formKey.currentState!.validate()){
-                  
+                if (_formKey.currentState!.validate()) {
+                  registrar(context);
                 }
               },
               color: Colors.lightBlue,
@@ -197,49 +225,46 @@ class AlumnoFormState extends State<AlumnoForm> {
       return const Text(
         "Registrar",
         style: TextStyle(
-          color: Colors.black,
+          color: Colors.white,
           fontSize: 20,
         ),
       );
     } else if (_state == 1) {
       return const CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+        valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
       );
     } else {
       return const Text(
         "Registrar",
         style: TextStyle(
-          color: Colors.black,
+          color: Colors.white,
           fontSize: 20,
         ),
       );
     }
   }
 
-  String validateEmail(String? value) {
-    String check = "";
-    final RegExp regex  =
-       RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
-    if (value!.isEmpty) {
-      check = 'Por favor ingrese el email';
-    } else {
-      if (!regex.hasMatch(value!)) {
-        check = 'Enter Valid Email';
-      }
-    }
-    return check;
-  }
-
-  String validatePassword(String? value) {
-    String check = "";
-    if (value!.isEmpty) {
-      check = 'Por favor ingrese el passwpord';
-    } else {
-      if (6 > value!.length) {
-        check = 'Por favor ingrese un passwpord de 6 caracteres';
-      }
-    }
-    return check;
-  }
   
+  registrar(BuildContext context) async {
+
+    final _auth = FirebaseAuth.instance;
+    final _firebaseStorageRef = FirebaseStorage.instance;
+    final _db = FirebaseFirestore.instance;
+
+    await _auth.createUserWithEmailAndPassword(
+            email: email.text, password: password.text)
+        .then((value) {
+      DocumentReference ref = _db.collection('Alumno').doc(email.text);
+      ref.set({'Nombre': name.text, 'Apellido': apellido.text}).then((value) {
+        Navigator.push(context, Animation_route(HomePageMain()))
+            .whenComplete(() => Navigator.of(context).pop());
+      });
+
+      // ignore: invalid_return_type_for_catch_error
+    }).catchError((e) => {
+              Scaffold.of(context)
+                  .showSnackBar(SnackBar(content: Text(e.message))),
+            });
+  }
+        
 }
