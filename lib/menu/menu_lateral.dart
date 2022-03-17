@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/add/add_alumno.dart';
+import 'package:tuttorial_1/add/add_tarea.dart';
 
 import '../main.dart';
 import 'animation_route.dart';
@@ -47,6 +48,16 @@ class Menu extends State<MenuLateral> {
               title: const Text('Registrar'),
               onTap: () {
                 Navigator.push(context, Animation_route(AddAlumno()))
+                    .whenComplete(() => Navigator.of(context).pop());
+              }),
+          ListTile(
+              leading: const Icon(
+                Icons.task,
+                color: Colors.black,
+              ),
+              title: const Text('Registrar Tarea'),
+              onTap: () {
+                Navigator.push(context, Animation_route(AddTarea()))
                     .whenComplete(() => Navigator.of(context).pop());
               }),
         ],
