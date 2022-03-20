@@ -24,7 +24,7 @@ class ListUserState extends State<ListUser> {
     return Scaffold(
       appBar: AppBar(
         title: appBarTitle,
-        actions: [
+        actions:  [
 
         ],
       ),

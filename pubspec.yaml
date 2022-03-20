@@ -40,7 +40,8 @@ dependencies:
   firebase_storage: ^10.2.9
   firebase_storage_web: ^3.2.10
   image_picker: ^0.8.4+11
- 
+  image_cropper: ^1.5.0 
+  video_player: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -63,7 +64,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  assets:
+     - assets/english.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
