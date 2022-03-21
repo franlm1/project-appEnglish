@@ -10,7 +10,6 @@ import 'ImagePickerHandler.dart';
 class CardFotos extends StatefulWidget {
   @override
   CardFoto createState() {
-
     return CardFoto();
   }
 }
@@ -34,52 +33,24 @@ class CardFoto extends State<CardFotos> with ImagePickerListener {
     super.dispose();
   }
 
-  Widget showImageVideo() {
-    if (croppedFileVideo != null) {
-      return FutureBuilder(
-        future: _initializeVideoPlayerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return AspectRatio(
-              aspectRatio: controller.value.aspectRatio,
-              child: VideoPlayer(controller),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      );
-    } else {
-      return const Image(image: AssetImage('assets/english.png'));
-    }
-  }
-
-  Widget showImageDoc() {
-    if (croppedFileDoc != null) {
-    return Image(image: FileImage(croppedFileDoc!));
-     
-    } else {
-      return const Image(image: AssetImage('assets/english.png'));
-    }
-  }
-
+  // TODO: MENU PRINCIPAL
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Column(
       children: [
+
+        //CARD VIDEO
         Card(
           elevation: 5,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           child: InkWell(
-              child: Container(
-            height: 100,
-            width: 200,
-            child: showImageVideo(),
-          )),
+            child: Container(
+              height: 100,
+              width: 200,
+              child: showImageVideo(),
+            ),
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -94,6 +65,7 @@ class CardFoto extends State<CardFotos> with ImagePickerListener {
                 }),
           ],
         ),
+        // CARD DOCUMENTO
         Card(
           elevation: 5,
           shape:
@@ -122,6 +94,38 @@ class CardFoto extends State<CardFotos> with ImagePickerListener {
     );
   }
 
+  // WIDGET VIDEO
+  Widget showImageVideo() {
+    if (croppedFileVideo != null) {
+      return FutureBuilder(
+        future: _initializeVideoPlayerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return AspectRatio(
+              aspectRatio: controller.value.aspectRatio,
+              child: VideoPlayer(controller),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      );
+    } else {
+      return const Image(image: AssetImage('assets/english.png'));
+    }
+  }
+  // WIDGET DOCUMENTO 
+  Widget showImageDoc() {
+    if (croppedFileDoc != null) {
+      return Image(image: FileImage(croppedFileDoc!));
+    } else {
+      return const Image(image: AssetImage('assets/english.png'));
+    }
+  }
+  
+  //METODOS ABSTRACTOR
   @override
   userImageVideo(File _image) {
     croppedFileVideo = _image;
@@ -130,7 +134,6 @@ class CardFoto extends State<CardFotos> with ImagePickerListener {
     controller.setLooping(true);
     setState(() {});
   }
-
   @override
   userImageDoc(File _image) {
     croppedFileDoc = _image;
