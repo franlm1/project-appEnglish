@@ -4,6 +4,7 @@ import 'package:tuttorial_1/add/add_task.dart';
 
 
 
+import '../add/add_alumno.dart';
 import '../main.dart';
 import 'animation_route.dart';
 
@@ -40,6 +41,16 @@ class Menu extends State<MenuLateral> {
               title: const Text('Inicio'),
               onTap: () { Navigator.push(context, Animation_route(MyApp()))
               .whenComplete(() => Navigator.of(context).pop());
+              }),
+              ListTile(
+              leading: const Icon(
+                Icons.person,
+                color: Colors.black,
+              ),
+              title: const Text('Registrar'),
+              onTap: () {
+                Navigator.push(context, Animation_route(AddAlumno()))
+                    .whenComplete(() => Navigator.of(context).pop());
               }),
   
           ListTile(
