@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:tuttorial_1/main.dart';
 import 'package:tuttorial_1/menu/menu_lateral.dart';
 
-
 import '../menu/animation_route.dart';
 
 void main() => runApp(AddAlumno());
@@ -188,10 +187,8 @@ class AlumnoFormState extends State<AlumnoForm> {
                   return 'Por favor ingrese el password';
                 } else {
                   if (6 > value.length) {
-                     return 'mayor de 6 caracteres';
-                  } else {
-                   
-                  }
+                    return 'mayor de 6 caracteres';
+                  } else {}
                 }
               },
               controller: password,
@@ -244,14 +241,14 @@ class AlumnoFormState extends State<AlumnoForm> {
     }
   }
 
-  
   registrar(BuildContext context) async {
-
     final _auth = FirebaseAuth.instance;
     final _firebaseStorageRef = FirebaseStorage.instance;
     final _db = FirebaseFirestore.instance;
 
-    await _auth.createUserWithEmailAndPassword(
+    // /TODO Implementar email esta en uso.
+    await _auth
+        .createUserWithEmailAndPassword(
             email: email.text, password: password.text)
         .then((value) {
       DocumentReference ref = _db.collection('Alumno').doc(email.text);
@@ -266,5 +263,4 @@ class AlumnoFormState extends State<AlumnoForm> {
                   .showSnackBar(SnackBar(content: Text(e.message))),
             });
   }
-        
 }
