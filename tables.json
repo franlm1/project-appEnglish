@@ -1,0 +1,65 @@
+{ 
+
+"Users":{
+    "ID":"se cogera del auth",
+    "nombre":"",
+    "apellido":"",
+    "email":"",
+    "rol":"Se selecciona segun la pantalla de registro, si selecciona la pnatalla de profesor se asigna rol de profesor, se añade al usuario a la lista de profesores"
+    
+},
+"Cursos":{
+    "ID":"C1",
+    "nombre":"",
+    "alumnos":[
+        "emails",
+        "emails"
+    ],
+    "modulos":[
+        "id",
+        "id"
+    ]
+},
+"Modulos":{
+    "ID":"M1_1",
+    "nombre":"",
+    "videos":[
+        "url",
+        "urls"
+    ],
+    "archivos":[
+        "url",
+        "url"
+    ]
+
+},
+"Alumnos":{
+    "ID":"se cogera de la pantalla registro alumno",
+    "nombre":"",
+    "apellido":"",
+    "email":"sera el mismo con el que se registra",
+    "curso":"ID curso, este determinara los modulos que se le mostraran puesto que cada curso tiene relacionados los ID de determinados modulos"
+},
+"Profesores":{
+    "ID":"se cogera de la pantalla registro como profesor",
+    "nombre":"",
+    "apellidos":"",
+    "email":"sera el mismo qcon el que se registra"
+},
+"Videos":{
+    "ID":"",
+    "titulo":"Este sera el texto que se mostraria en el thumbnail del video",
+    "descripcion":"",
+    "categoria":"",
+    "url":""
+},
+"Archivos":{
+    "ID":"",
+    "titulo":"",
+    "categoria":"las opciones a elegir vendran determinadas por las carpetas del FirebaseStorage",
+    "url":""
+}
+    
+}
+
+

@@ -13,6 +13,7 @@ import '../menu/animation_route.dart';
 void main() => runApp(AddAlumno());
 
 class AddAlumno extends StatelessWidget {
+ 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
