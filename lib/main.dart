@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tuttorial_1/add/add_task.dart';
+import 'package:tuttorial_1/screens/login_screen_student.dart';
 import 'screens/welcome_screen.dart';
 // import 'home_screen.dart';
 // import 'signup_screen.dart';
@@ -28,20 +30,18 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         brightness: Brightness.dark,
       ),
-      home: WelcomeScreen(),
-      routes:{
-        'welcome_screen': (context) => WelcomeScreen(),
-        // 'registration_screen': (context) =>RegistrationScreen(),
-        // 'login_screen': (context) => LoginScreen(),
-        // 'home_screen': (context) => HomeScreen()
-      },
+      home:WelcomeScreen(),
+        routes: <String, WidgetBuilder>{},
+      
     );
   }
 }
 
 class HomePageMain extends StatefulWidget {
+  const HomePageMain({Key? key}) : super(key: key);
+
   @override
-  _SearchListState createState() => new _SearchListState();
+  _SearchListState createState() => _SearchListState();
 }
 
 class _SearchListState extends State<HomePageMain> {

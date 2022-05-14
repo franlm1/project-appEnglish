@@ -261,7 +261,7 @@ class AlumnoFormState extends State<AlumnoForm> {
       // ignore: invalid_return_type_for_catch_error
     }).catchError((e) => {
               Scaffold.of(context)
-                  .showSnackBar(SnackBar(content: Text(e.message))),
+            .showSnackBar(SnackBar(content: Text(e.message))),
             });
   }
 }

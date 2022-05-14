@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/add/add_task.dart';
 
+import '../menu/animation_route.dart';
+import '../screens/login_screen_student.dart';
+
 class RoundedButton extends StatelessWidget {
   RoundedButton(
       {required this.colour, required this.title, required this.onPressed});
   final Color colour;
   final String title;
-  final Function onPressed;
+  final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -16,15 +19,13 @@ class RoundedButton extends StatelessWidget {
         color: colour,
         borderRadius: BorderRadius.circular(30.0),
         child: MaterialButton(
-          onPressed: () {
-            
-          } ,
+          onPressed: onPressed,
           //Go to login screen.
-          minWidth: 200.0,
-          height: 42.0,
+          minWidth: 440.0,
+          height: 277.0,
           child: Text(
             title,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontSize: 30),
           ),
         ),
       ),
