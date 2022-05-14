@@ -2,8 +2,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:tuttorial_1/add/add_task.dart';
 
 import 'package:tuttorial_1/assets/rounded_button.dart';
+import '../menu/animation_route.dart';
 
 
 //code for designing the UI of our text field where the user writes his email id or password
@@ -83,7 +85,7 @@ class _LoginScreenStudentState extends State<LoginScreenStudent> {
                       final user = await _auth.signInWithEmailAndPassword(
                           email: email, password: password);
                       if (user != null) {
-                        Navigator.pushNamed(context, 'add_task');
+                        Navigator.push(context, Animation_route(AddTask()));
                       }
                     } catch (e) {
                       print(e);
