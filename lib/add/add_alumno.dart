@@ -72,6 +72,15 @@ class AlumnoFormState extends State<AlumnoForm> {
   var password = TextEditingController();
   var name = TextEditingController();
   var apellido = TextEditingController();
+  List<String> spinnerCurso = ['C1', 'C2', 'C3', 'Curso 4'];
+  late String dropdownValueCurso;
+    @override
+  void initState() {
+    dropdownValueCurso = spinnerCurso[0];
+    super.initState();
+  }
+  
+  
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -211,10 +220,35 @@ class AlumnoFormState extends State<AlumnoForm> {
                   borderRadius: BorderRadius.circular(15.0)),
               child: setUpButtonChild(),
             ),
-          )
+          ),
         ],
       ),
     );
+  }
+
+  // SPINNER DEL CURSO
+  Widget dropCurso() {
+    return DropdownButton<String>(
+        value: dropdownValueCurso,
+        icon: const Icon(Icons.arrow_drop_down),
+        iconSize: 24,
+        elevation: 16,
+        style: const TextStyle(color: Colors.red, fontSize: 18),
+        underline: Container(
+          height: 2,
+          color: Colors.pink,
+        ),
+        items: spinnerCurso.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (String? data) {
+          setState(() {
+            dropdownValueCurso = data!;
+          });
+        });
   }
 
   int _state = 0;
@@ -253,7 +287,10 @@ class AlumnoFormState extends State<AlumnoForm> {
             email: email.text, password: password.text)
         .then((value) {
       DocumentReference ref = _db.collection('Alumno').doc(email.text);
-      ref.set({'Nombre': name.text, 'Apellido': apellido.text}).then((value) {
+      DocumentReference ref2 = _db.collection('Cursos').doc(dropdownValueCurso);
+      ref.set({'Nombre': name.text, 'Apellido': apellido.text});
+      ref2.set({'alumnos': email.text})
+      .then((value) {
         Navigator.push(context, Animation_route(HomePageMain()))
             .whenComplete(() => Navigator.of(context).pop());
       });
@@ -261,7 +298,7 @@ class AlumnoFormState extends State<AlumnoForm> {
       // ignore: invalid_return_type_for_catch_error
     }).catchError((e) => {
               Scaffold.of(context)
-                  .showSnackBar(SnackBar(content: Text(e.message))),
+            .showSnackBar(SnackBar(content: Text(e.message))),
             });
   }
 }
