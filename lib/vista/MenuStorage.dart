@@ -52,7 +52,7 @@ class MenuStorage_ extends StatefulWidget {
 }
 
 class MenuStorageState extends State<MenuStorage_> {
-
+  
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   late CollectionReference mainCollection;
   String tipo = "Videos";

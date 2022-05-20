@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tuttorial_1/vista/MenuGaleria.dart';
 import 'package:tuttorial_1/vista/MenuStorage.dart';
 import '../menu/animation_route.dart';
 import 'MenuCloud.dart';
@@ -15,10 +16,15 @@ class MenuControlador extends StatelessWidget {
   const MenuControlador({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
+      
       title: 'MENU CONTROLADOR',
-      home: Scaffold(
+      theme:  ThemeData(
+        primarySwatch: Colors.red,
+        brightness: Brightness.light,
+      ),
+      home: const Scaffold(
         body: body(),
       ),
     );
@@ -60,7 +66,7 @@ class _bodyState extends State<body> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton.icon(
                   onPressed: () {
-                    Navigator.push(context, Animation_route(MenuCloud()))
+                    Navigator.push(context, Animation_route(Galeria()))
                         .whenComplete(() => Navigator.of(context).pop());
                   },
                   icon: const Icon(Icons.rectangle_outlined),

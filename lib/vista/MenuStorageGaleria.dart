@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/servicios/loadImages.dart';
+import 'package:tuttorial_1/vista/MenuCloud.dart';
 import 'package:tuttorial_1/vista/MenuStorage.dart';
 import 'package:video_player/video_player.dart';
 
@@ -17,12 +18,13 @@ class MenuStorageGaleria extends StatefulWidget {
 }
 
 class MenuStorageGaleriaState extends State<MenuStorageGaleria> {
+
   late CollectionReference mainCollection;
   late VideoPlayerController controller;
   late Future<void> _initializeVideoPlayerFuture;
   FirebaseStorage storage = FirebaseStorage.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
   
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,19 +83,25 @@ class MenuStorageGaleriaState extends State<MenuStorageGaleria> {
                                   : Image.network(image['url']),
                               title: Text(image['uploaded_by']),
                               subtitle: Text(image['description']),
-                              trailing: IconButton(
-                                onPressed: () {
-                                  _addItem(
-                                      widget.tipo.substring(17),
-                                      image['uploaded_by'],
-                                      image['description'],
-                                      image['path']);
-                                },
-                                icon: const Icon(
-                                  Icons.add,
-                                  color: Colors.red,
-                                ),
-                              ),
+                              trailing:  IconButton(
+                              onPressed: ()  {
+          Navigator.push(context, Animation_route(MenuCloud(
+            image['uploaded_by'],
+            image['description'],
+            image['url'],
+            widget.tipo
+
+            )
+          )
+        )
+                    .whenComplete(() => Navigator.of(context).pop());
+         
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.add,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
                             ),
                           );
                         },
@@ -132,20 +140,15 @@ class MenuStorageGaleriaState extends State<MenuStorageGaleria> {
     );
   }
 
-  Future<void> _addItem(
-    
-      String tipo, String title, String description, String url) async {
-    mainCollection = firestore.collection('Modulos');
-    DocumentReference documentReferencer = mainCollection.doc('m1_2');
-
-    Map<String, dynamic> data = <String, dynamic>{
-      "url": url,
-      "description": description,
-    };
-
-    await documentReferencer
-        .update({'archivos': FieldValue.arrayUnion(data[1])})
-        .whenComplete(() => print("Notes item added to the database"))
-        .catchError((e) => print(e));
-  }
+  Widget _button( ) => IconButton(
+        onPressed: ()  {
+          // Navigator.push(context, Animation_route(MenuCloud_()))
+          //             .whenComplete(() => Navigator.of(context).pop());
+         
+        },
+        icon: const Icon(
+          Icons.add,
+          color: Colors.red,
+        ),
+      );
 }
