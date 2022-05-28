@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tuttorial_1/add/add_alumno.dart';
 import 'package:tuttorial_1/add/add_task.dart';
 import 'package:tuttorial_1/screens/login_screen_student.dart';
 import 'screens/welcome_screen.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         brightness: Brightness.dark,
       ),
-      home:WelcomeScreen(),
+      home:AddAlumno(),
         routes: <String, WidgetBuilder>{},
       
     );
