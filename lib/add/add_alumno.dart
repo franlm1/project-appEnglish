@@ -72,7 +72,7 @@ class AlumnoFormState extends State<AlumnoForm> {
   var password = TextEditingController();
   var name = TextEditingController();
   var apellido = TextEditingController();
-  List<String> spinnerCurso = ['C1', 'C2', 'C3', 'Curso 4'];
+  List<String> spinnerCurso = ['c1', 'c2', 'c3', 'c4'];
   late String dropdownValueCurso;
     @override
   void initState() {
@@ -204,6 +204,11 @@ class AlumnoFormState extends State<AlumnoForm> {
               controller: password,
             ),
           ),
+            Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 3.0, horizontal: 50.0),
+            child: dropCurso(),
+          ),
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
@@ -288,8 +293,8 @@ class AlumnoFormState extends State<AlumnoForm> {
         .then((value) {
       DocumentReference ref = _db.collection('Alumno').doc(email.text);
       DocumentReference ref2 = _db.collection('Cursos').doc(dropdownValueCurso);
-      ref.set({'Nombre': name.text, 'Apellido': apellido.text});
-      ref2.set({'alumnos': email.text})
+      ref.update({'Nombre': name.text, 'Apellido': apellido.text});
+      ref2.update({'alumnos': email.text})
       .then((value) {
         Navigator.push(context, Animation_route(HomePageMain()))
             .whenComplete(() => Navigator.of(context).pop());
