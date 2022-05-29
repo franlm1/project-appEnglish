@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tuttorial_1">
+    package="com.example.tuttorial_1"
+    android:installLocation="preferExternal">
     
    <application
         android:label="tuttorial_1"
