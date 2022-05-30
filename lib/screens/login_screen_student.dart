@@ -6,6 +6,7 @@ import 'package:tuttorial_1/add/add_task.dart';
 
 import 'package:tuttorial_1/assets/rounded_button.dart';
 import '../menu/animation_route.dart';
+import '../vista/MenuControlador.dart';
 
 
 //code for designing the UI of our text field where the user writes his email id or password
@@ -40,6 +41,21 @@ class _LoginScreenStudentState extends State<LoginScreenStudent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+              appBar: AppBar(
+          title: Text("Hooray"),
+          actions: [
+            InkWell(
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.black,
+                ),
+                onTap: () {
+                  Navigator.push(context, Animation_route(MenuControlador()))
+                      .whenComplete(() => Navigator.of(context).pop());
+                }),
+            const SizedBox(width: 10),
+          ],
+        ),
       backgroundColor: Colors.white,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,

@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/main.dart';
 import 'package:tuttorial_1/menu/menu_lateral.dart';
+import 'package:tuttorial_1/vista/MenuControlador.dart';
 
 import '../menu/animation_route.dart';
 
@@ -50,7 +51,7 @@ class HomePage extends StatelessWidget {
                   color: Colors.black,
                 ),
                 onTap: () {
-                  Navigator.push(context, Animation_route(MyApp()))
+                  Navigator.push(context, Animation_route(MenuControlador()))
                       .whenComplete(() => Navigator.of(context).pop());
                 }),
             const SizedBox(width: 10),
