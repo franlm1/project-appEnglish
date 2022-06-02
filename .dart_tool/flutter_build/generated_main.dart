@@ -5,10 +5,10 @@
 
 // @dart = 2.16
 
-// When `package:tuttorial_1/vista/MenuControlador.dart` defines `main`, that definition is shadowed by the definition below.
-export 'package:tuttorial_1/vista/MenuControlador.dart';
+// When `package:tuttorial_1/main.dart` defines `main`, that definition is shadowed by the definition below.
+export 'package:tuttorial_1/main.dart';
 
-import 'package:tuttorial_1/vista/MenuControlador.dart' as entrypoint;
+import 'package:tuttorial_1/main.dart' as entrypoint;
 import 'dart:io'; // flutter_ignore: dart_io_import.
 import 'package:video_player_android/video_player_android.dart';
 import 'package:video_player_avfoundation/video_player_avfoundation.dart';

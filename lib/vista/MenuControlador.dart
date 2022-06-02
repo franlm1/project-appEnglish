@@ -26,7 +26,7 @@ class MenuControlador extends StatelessWidget {
         primarySwatch: Colors.red,
         brightness: Brightness.light,
       ),
-       home:  WelcomeScreen(),
+       home:  MenuControlador(),
       
     );
   }
