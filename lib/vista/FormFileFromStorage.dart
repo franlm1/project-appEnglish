@@ -14,6 +14,13 @@ void main() async {
   await Firebase.initializeApp();
 }
 
+class Modules {
+  final String name;
+  final String id;
+
+  Modules(this.name, this.id);
+}
+
 class FormFileFromStorage extends StatefulWidget {
   final String nameFile;
   final String url;
@@ -28,21 +35,24 @@ class _MenuMovil_State extends State<FormFileFromStorage> {
   String dropdownValueCourse = 'Course 1';
   String dropdownValueModule = 'Modules 1';
 
-  List<Map> itemsModules = [
-    {"value": 'm1', "text": 'Modules 1'},
-    {"value":'m2', "text": 'Modules 2'},
-    {"value":'m3', "text": 'Modules 3'},
-    {"value":'m4', "text": 'Modules 4'},
-    {"value":'m5', "text": 'Modules 5'},
-    {"value":'m6', "text": 'Modules 6'}
-
-  ];
+  
   final List<String> itemsCourse = [
     'Course 1',
     'Course 2',
     'Course 3',
     'Course 4'
   ];
+  final List<Modules> modulesList = <Modules>[
+    Modules('Module 1', 'm1'),
+    Modules('Module 2', 'm2'),
+    Modules('Module 3', 'm3'),
+    Modules('Module 4', 'm4'),
+    Modules('Module 5', 'm5'),
+    Modules('Module 6', 'm6'),
+    Modules('Module 7', 'm7')
+
+
+    ];
 
   @override
   Widget build(BuildContext context) {
@@ -135,8 +145,6 @@ class _MenuMovil_State extends State<FormFileFromStorage> {
         return DropdownMenuItem(
           value: itemsCourse,
           child: Text(itemsCourse),
-
-          
         );
       }).toList(),
       onChanged: (String? newValue) {
@@ -148,18 +156,23 @@ class _MenuMovil_State extends State<FormFileFromStorage> {
   }
 
   Widget dropButtonModule() {
-    return DropdownButtonFormField(
-        value: 'Modules 1',
-        icon: const Icon(Icons.arrow_downward, color: Colors.red),
-        elevation: 20,
-        style: const TextStyle(color: Colors.red),
-        items: itemsModules
-            .map((item) =>
-                DropdownMenuItem(value: item['value'], child: item['text']))
-            .toList(),
-        onChanged: (v) => setState(() {
-          
-        }));
+    
+    return DropdownButtonFormField<Modules>(
+      icon: const Icon(Icons.arrow_downward, color: Colors.red),
+      hint: Text('Module 1'),
+
+      style: const TextStyle(color: Colors.red),
+      elevation: 20,
+      items: modulesList.map<DropdownMenuItem<Modules>>((Modules item) {
+        return DropdownMenuItem<Modules>(
+          value: item,
+          child: Text(item.name),
+        );
+      }).toList(),
+      onChanged: (e) => {
+        
+      },
+    );
   }
 
   Widget elevatedButton() {

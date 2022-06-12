@@ -1,12 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tuttorial_1/vista/MenuGaleria.dart';
 import 'package:tuttorial_1/vista/MenuThemeSelectFileFromStorage.dart';
-import 'package:tuttorial_1/vista/ShowFileFromStorage.dart';
 import 'package:tuttorial_1/vista/SelectFileToStotage.dart';
 import 'package:tuttorial_1/vista/ShowFilesFromCloud.dart';
 import '../menu/animation_route.dart';
-import 'MenuMovil.dart';
 import 'FormFileFromStorage.dart';
 
 //MENU PRINCIPAL
