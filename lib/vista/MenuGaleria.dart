@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../menu/animation_route.dart';
 import 'MenuControlador.dart';
+import 'MenuGaleriaGaleria.dart';
 
 class Galeria extends StatelessWidget {
   const Galeria({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class Galeria extends StatelessWidget {
       home: Scaffold(
         body: Galeria_(),
         appBar: AppBar(
-          title: Text('Gallery'),
+          title: Text('añadimos archivo a la bd firestore '),
           actions: [
             InkWell(
                 child: const Icon(
@@ -45,13 +46,15 @@ class Galeria_ extends StatefulWidget {
 }
 
 class _Galeria_State extends State<Galeria_> {
-
+  int? _selectedValueIndex = 1;
   final List<String> itemsModulos = ['Modules 1','Modules 2','Modules 3','Modules 4'];
-  final List<String> itemsUnit = ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4'];
+  final List<String> itemsUnit = ['Course 1', 'Course 2', 'Course 3', 'Course 4'];
 
-  String dropdownValueUnit = 'Unit 1';
+  String dropdownValueUnit = 'Course 1';
   String dropdownValueModule = 'Modules 1';
-
+   String tipo = "Videos";
+  int selectedIndex = 0;
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -59,10 +62,23 @@ class _Galeria_State extends State<Galeria_> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
+                Text("seleccionamos el tipo y el curso donde queremos que se asigne"),
+                 Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: button(index: 1, text: 'Videos'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: button(index: 2, text: 'Files'),
+                      ),
+                    ],
+                  ),
                 const Center(
                   child: Padding(
                     padding: EdgeInsets.all(30.0),
-                    child: Text(" Gallery ",
+                    child: Text(" ",
                         style: TextStyle(fontSize: 30, color: Colors.red)),
                   ),
                 ),
@@ -93,7 +109,7 @@ class _Galeria_State extends State<Galeria_> {
 
   Widget dropButtonFormFieldUnit() {
     return DropdownButtonFormField(
-      value: 'Unit 1',
+      value: 'Course 1',
       icon: const Icon(Icons.arrow_downward, color: Colors.red),
       elevation: 20,
       style: const TextStyle(color: Colors.red),
@@ -134,9 +150,66 @@ class _Galeria_State extends State<Galeria_> {
   Widget elevatedButton() {
     return ElevatedButton.icon(
         onPressed: () {
-         
+             Navigator.push(context, Animation_route(MenuGaleriaGaleria()))
+                        .whenComplete(() => Navigator.of(context).pop());
         },
         icon: const Icon(Icons.library_add),
-        label: const Text('Gallery'));
+        label: const Text('Selecciona en store'));
   }
+  Widget button({required String text, required int index}) {
+    return InkWell(
+      splashColor: Colors.cyanAccent,
+      onTap: () {
+        setState(() {
+          _selectedValueIndex = index;
+          if (index == 1) {
+            tipo = "Videos";
+          } else {
+            tipo = "Archivos";
+          }
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        color: index == _selectedValueIndex ? Colors.red : Colors.white,
+        child: Text(
+          text,
+          style: TextStyle(
+            color: index == _selectedValueIndex ? Colors.white : Colors.black,
+          ),
+        ),
+      ),
+    );
+  }
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('It was add correctly')
+            
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Approve'),
+              onPressed: () {
+                //  Navigator.push(context, Animation_route(const MenuControlador()))
+                //       .whenComplete(() => Navigator.of(context).pop());
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
+
+ 

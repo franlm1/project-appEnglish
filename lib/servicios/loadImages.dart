@@ -1,61 +1,65 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class LoadImagen {
-  final String selectedValue;
-  final String tipo;
+  
+  late String theme;
   late ListResult result;
   FirebaseStorage storage = FirebaseStorage.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  LoadImagen(this.selectedValue, this.tipo);//--
-  LoadImagen.c(this.selectedValue, this.tipo);
+  LoadImagen(this.theme); //--
+  LoadImagen.c();
+  
   Future<List<Map<String, dynamic>>> loadImages() async {
     List<Map<String, dynamic>> files = [];
-      result = await storage.ref().child(selectedValue).child(tipo).list();
+    result = await storage.ref().child(this.theme).list();
     final List<Reference> allFiles = result.items;
     await Future.forEach<Reference>(allFiles, (file) async {
+      final String name = await file.name;
       final String fileUrl = await file.getDownloadURL();
-      final FullMetadata fileMeta = await file.getMetadata();
+
       files.add({
         "url": fileUrl,
         "path": file.fullPath,
-        "uploaded_by": fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
-        "description":
-            fileMeta.customMetadata?['description'] ?? 'No description',
+        "uploaded_by": name
       });
     });
 
     return files;
   }
-  Future<List<Map<String, dynamic>>> loadImagesFromFirestore() async {
+
+
+
+  Future<List<Map<String, dynamic>>> loadImagesFromFirestdorie() async {
     List<Map<String, dynamic>> files = [];
-      result = await storage.ref().child(selectedValue).child(tipo).list();
-    final List<Reference> allFiles = result.items;
-    await Future.forEach<Reference>(allFiles, (file) async {
-      final String fileUrl = await file.getDownloadURL();
-      final FullMetadata fileMeta = await file.getMetadata();
-      files.add({
-        "url": fileUrl,
-        "path": file.fullPath,
-        "uploaded_by": fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
-        "description":
-            fileMeta.customMetadata?['description'] ?? 'No description',
+    final docRef = firestore.collection("Modulos").doc("Modules 1_Course 1");
+    docRef.get().then((DocumentSnapshot doc) {
+      final data = doc.data() as Map<String, dynamic>;
+      data.forEach((key, value) {
+        for (var element in value) {
+          files.add({
+            "url": element["url"],
+            "titulo": element["titulo"],
+            "tipo": key,
+            "descripcion": element["descripcion"],
+          });
+        }
       });
     });
-
     return files;
   }
-  Future<void> getData() async {
-    // Get docs from collection reference
-    QuerySnapshot querySnapshot = await firestore.collection('collectionName').get();;
 
-    // Get data from docs and convert map to List
-    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-  //for a specific field
-  //  final allData = querySnapshot.docs.map((doc) => doc.get('fieldName')).toList();
-
-    print(allData);
-}
+//  final docRef = firestore.collection("Modulos").doc("Modules 1_Course 1");
+//     docRef.get().then(
+//       (DocumentSnapshot doc) {
+//         final data = doc.data() as Map<String, dynamic>;
+//         data.forEach((key, value) {
+//           for (var element in value) {
+//             print(element["tipo"]);
 
 }

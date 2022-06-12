@@ -1,9 +1,11 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/vista/MenuControlador.dart';
 import '../menu/animation_route.dart';
 import '../servicios/Uploat.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -23,7 +25,7 @@ class MenuMovil extends StatelessWidget {
       home: Scaffold(
         body: MenuMovil_(),
         appBar: AppBar(
-          title: Text('Mobile Menu'),
+          title: Text('Add fileds to Storage'),
           actions: [
             InkWell(
                 child: const Icon(
@@ -43,32 +45,35 @@ class MenuMovil extends StatelessWidget {
 }
 
 class MenuMovil_ extends StatefulWidget {
-  
   @override
   State<MenuMovil_> createState() => _MenuMovil_State();
 }
 
+//TODO
 class _MenuMovil_State extends State<MenuMovil_> {
-
   FirebaseStorage storage = FirebaseStorage.instance;
-  final List<String> itemsModulos = ['Modules 1', 'Modules 2', 'Modules 3', 'Modules 4'];
-  final List<String> itemsUnit = ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4'];
-  int? _selectedValueIndex = 1;
+  late String _selectedValueIndex = '';
+  FilePickerResult? result;
+  late int index = 0;
+  final List<String> itemsUnit = ['Theme 1', 'Theme 2', 'Theme 3', 'Theme 4'];
+
   final titulo = TextEditingController();
   final descripcion = TextEditingController();
-  String dropdownValue = 'Unit 1';
+  String dropdownValue = 'Theme 1';
   String tipo = "Videos";
   int selectedIndex = 0;
-  int index = 0;
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(children: [
+            Text("seleccionamos un archivo par añadirlo a storage"),
             Row(
               children: [
                 Padding(
@@ -77,16 +82,9 @@ class _MenuMovil_State extends State<MenuMovil_> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(30.0),
-                  child: button(index: 2, text: 'Files'),
+                  child: button(index: 2, text: 'File'),
                 ),
               ],
-            ),
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.all(30.0),
-                child: Text(" Mobile Menu ",
-                    style: TextStyle(fontSize: 30, color: Colors.red)),
-              ),
             ),
             SizedBox(
               width: 400.0,
@@ -106,6 +104,13 @@ class _MenuMovil_State extends State<MenuMovil_> {
               width: 400.0,
               child: Padding(
                   padding: const EdgeInsets.all(10.0),
+                  child: textFormFiel(descripcion, '')),
+            )),
+            SizedBox(
+                child: Container(
+              width: 400.0,
+              child: Padding(
+                  padding: const EdgeInsets.all(10.0),
                   child: dropButtonFormField()),
             )),
             SizedBox(
@@ -115,6 +120,8 @@ class _MenuMovil_State extends State<MenuMovil_> {
                   padding: const EdgeInsets.all(10.0), child: elevatedButton()),
             )),
           ]),
+        ),
+      ),
     );
   }
 
@@ -123,11 +130,11 @@ class _MenuMovil_State extends State<MenuMovil_> {
       splashColor: Colors.cyanAccent,
       onTap: () {
         setState(() {
-          _selectedValueIndex = index;
+          _selectedValueIndex = index as String;
           if (index == 1) {
             tipo = "Videos";
           } else {
-            tipo = "Archivos";
+            tipo = "File";
           }
         });
       },
@@ -146,7 +153,7 @@ class _MenuMovil_State extends State<MenuMovil_> {
 
   Widget dropButtonFormField() {
     return DropdownButtonFormField(
-      value: 'Unit 1',
+      value: 'Theme 1',
       icon: const Icon(Icons.arrow_downward, color: Colors.red),
       elevation: 20,
       style: const TextStyle(color: Colors.red),
@@ -188,26 +195,26 @@ class _MenuMovil_State extends State<MenuMovil_> {
 
   Widget elevatedButton() {
     return ElevatedButton.icon(
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Processing Data')),
-          );
-          UploatImagen(dropdownValue,titulo.text, descripcion.text,tipo).upload();
-          Navigator.push(context, Animation_route(MenuMovil()))
-                      .whenComplete(() => Navigator.of(context).pop());
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Processing Data')),
+            );
 
-        }
-         setState((){});
+            result =
+                UploatImagen(dropdownValue, titulo.text, descripcion.text, tipo)
+                    .seletFile() as FilePickerResult?;
+
+            Navigator.push(context, Animation_route(MenuMovil()))
+                .whenComplete(() => Navigator.of(context).pop());
+          }
+          setState(() {
+            print(result?.files.first);
+          });
           titulo.clear();
           descripcion.clear();
-        
-        
-        
-      }, 
-      icon: const Icon(Icons.library_add),
-       label: const Text('Gallery')
-    );
+        },
+        icon: const Icon(Icons.library_add),
+        label: const Text('Select File'));
   }
 }
-//firebase storage

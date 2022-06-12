@@ -1,11 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/vista/MenuGaleria.dart';
-import 'package:tuttorial_1/vista/MenuStorage.dart';
+import 'package:tuttorial_1/vista/MenuThemeSelectFileFromStorage.dart';
+import 'package:tuttorial_1/vista/ShowFileFromStorage.dart';
+import 'package:tuttorial_1/vista/SelectFileToStotage.dart';
+import 'package:tuttorial_1/vista/ShowFilesFromCloud.dart';
 import '../menu/animation_route.dart';
-import 'MenuCloud.dart';
 import 'MenuMovil.dart';
+import 'FormFileFromStorage.dart';
 
+//MENU PRINCIPAL
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -16,15 +20,31 @@ class MenuControlador extends StatelessWidget {
   const MenuControlador({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      
       title: 'MENU CONTROLADOR',
-      theme:  ThemeData(
+      theme: ThemeData(
         primarySwatch: Colors.red,
         brightness: Brightness.light,
       ),
-      home: const Scaffold(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('STORAGE GALLERY MENU'),
+          automaticallyImplyLeading: false,
+          actions: [
+            InkWell(
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                ),
+                onTap: () {
+                  Navigator.push(context,
+                          Animation_route(MenuThemeSelectFileFromStorage()))
+                      .whenComplete(() => Navigator.of(context).pop());
+                }),
+            const SizedBox(width: 10),
+          ],
+        ),
         body: body(),
       ),
     );
@@ -38,18 +58,20 @@ class body extends StatefulWidget {
 }
 
 class _bodyState extends State<body> {
+  //TODO
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(200),
+      padding: const EdgeInsets.all(20),
       child: ListView(
         children: [
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton.icon(
                   onPressed: () {
-                    Navigator.push(context, Animation_route(MenuMovil()))
-                    .whenComplete(() => Navigator.of(context).pop());
+                    Navigator.push(
+                            context, Animation_route(SelecFileToStorage()))
+                        .whenComplete(() => Navigator.of(context).pop());
                   },
                   icon: const Icon(Icons.upload_file),
                   label: const Text('SUBIR ARCHIVOS'))),
@@ -57,7 +79,8 @@ class _bodyState extends State<body> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton.icon(
                   onPressed: () {
-                    Navigator.push(context, Animation_route(MenuStorage()))
+                    Navigator.push(
+                            context, Animation_route(FormFileFromStorage("Select a file","")))
                         .whenComplete(() => Navigator.of(context).pop());
                   },
                   icon: const Icon(Icons.library_add),
@@ -66,7 +89,7 @@ class _bodyState extends State<body> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton.icon(
                   onPressed: () {
-                    Navigator.push(context, Animation_route(Galeria()))
+                    Navigator.push(context, Animation_route(ShowFileFromCloud()))
                         .whenComplete(() => Navigator.of(context).pop());
                   },
                   icon: const Icon(Icons.rectangle_outlined),
