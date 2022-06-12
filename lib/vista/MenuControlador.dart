@@ -26,8 +26,9 @@ class MenuControlador extends StatelessWidget {
         primarySwatch: Colors.red,
         brightness: Brightness.light,
       ),
-       home:  MenuControlador(),
-      
+        home: const Scaffold(
+        body: body(),
+      ),
     );
   }
 }
