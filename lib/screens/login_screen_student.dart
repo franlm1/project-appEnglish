@@ -101,7 +101,7 @@ class _LoginScreenStudentState extends State<LoginScreenStudent> {
                       final user = await _auth.signInWithEmailAndPassword(
                           email: email, password: password);
                       if (user != null) {
-                        Navigator.push(context, Animation_route(MenuControlador()));
+                        Navigator.push(context, Animation_route(AddTask()));
                       }
                     } catch (e) {
                       print(e);
