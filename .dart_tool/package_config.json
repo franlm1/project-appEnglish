@@ -80,6 +80,18 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "ffi",
+      "rootUri": "file:///Users/spainct/.pub-cache/hosted/pub.dartlang.org/ffi-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "file_picker",
+      "rootUri": "file:///Users/spainct/.pub-cache/hosted/pub.dartlang.org/file_picker-4.6.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "firebase_auth",
       "rootUri": "file:///Users/spainct/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.10",
       "packageUri": "lib/",
@@ -350,13 +362,19 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "win32",
+      "rootUri": "file:///Users/spainct/.pub-cache/hosted/pub.dartlang.org/win32-2.5.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "tuttorial_1",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.16"
     }
   ],
-  "generated": "2022-05-30T15:30:54.576001Z",
+  "generated": "2022-06-12T21:17:49.338396Z",
   "generator": "pub",
   "generatorVersion": "2.16.2"
 }

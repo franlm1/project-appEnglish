@@ -59,7 +59,7 @@ class MenuStorageGaleriaState extends State<MenuStorageGaleria> {
                 Expanded(
                   child: FutureBuilder(
                     future:
-                        LoadImagen(widget.tematica, widget.tipo).loadImages(),
+                        LoadImagen(widget.tematica).loadImages(),
                     builder: (context,
                         AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
                       return ListView.builder(
