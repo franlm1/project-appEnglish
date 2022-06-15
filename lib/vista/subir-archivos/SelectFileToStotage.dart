@@ -5,9 +5,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/vista/MenuControlador.dart';
+import '../../util/animation_route.dart';
 
-import '../menu/animation_route.dart';
-import 'FormFileFromStorage.dart';
 
 class SelecFileToStorage extends StatefulWidget {
   const SelecFileToStorage({Key? key}) : super(key: key);

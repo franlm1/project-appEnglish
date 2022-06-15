@@ -1,4 +1,0 @@
-enum MediaSource {
-video,image
-
-}

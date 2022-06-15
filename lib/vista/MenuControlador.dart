@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tuttorial_1/vista/MenuThemeSelectFileFromStorage.dart';
-import 'package:tuttorial_1/vista/SelectFileToStotage.dart';
-import 'package:tuttorial_1/vista/ShowFilesFromCloud.dart';
-import '../menu/animation_route.dart';
-import 'FormFileFromStorage.dart';
+import 'package:tuttorial_1/vista/anadir-contenido/MenuThemeSelectFileFromStorage.dart';
+import 'package:tuttorial_1/vista/galeria/SelectCurseModule.dart';
+import 'package:tuttorial_1/vista/subir-archivos/SelectFileToStotage.dart';
+import '../util/animation_route.dart';
+import 'anadir-contenido/FormFileFromStorage.dart';
 
 //MENU PRINCIPAL
 void main() async {
@@ -23,6 +23,7 @@ class MenuControlador extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
         brightness: Brightness.light,
+        
       ),
       home: Scaffold(
         appBar: AppBar(
@@ -86,11 +87,13 @@ class _bodyState extends State<body> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton.icon(
                   onPressed: () {
-                    Navigator.push(context, Animation_route(ShowFileFromCloud()))
+                    Navigator.push(context, Animation_route(SelectCourseModule()))
                         .whenComplete(() => Navigator.of(context).pop());
                   },
                   icon: const Icon(Icons.rectangle_outlined),
-                  label: const Text('GALERIA'))),
+                  label: const Text('GALERIA')
+                  )
+                  ),
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton.icon(

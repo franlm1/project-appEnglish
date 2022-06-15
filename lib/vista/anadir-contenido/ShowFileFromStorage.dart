@@ -1,14 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/servicios/loadImages.dart';
-import 'package:tuttorial_1/vista/FormFileFromStorage.dart';
+import '../../util/animation_route.dart';
+import 'FormFileFromStorage.dart';
 import 'package:tuttorial_1/vista/MenuControlador.dart';
-import 'package:tuttorial_1/vista/MenuThemeSelectFileFromStorage.dart';
+import 'package:tuttorial_1/vista/anadir-contenido/MenuThemeSelectFileFromStorage.dart';
 import 'package:video_player/video_player.dart';
 
-import '../menu/animation_route.dart';
 
 class ShowFileFromStorage extends StatefulWidget {
   final String theme;
@@ -44,7 +46,7 @@ class ShowFileFromStorageState extends State<ShowFileFromStorage> {
               children: [
                 Expanded(
                   child: FutureBuilder(
-                    future: LoadImagen(widget.theme).loadImages(),
+                    future: LoadImagen(widget.theme).loadStorage(),
                     builder: (context,
                         AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
                       return ListView.builder(
@@ -74,7 +76,10 @@ class ShowFileFromStorageState extends State<ShowFileFromStorage> {
                                   ),
                                   IconButton(
                                     onPressed: () {
-                                    
+                                      deleteFile(image['url']);
+                                      setState(() {
+                                        
+                                      });
                                       
                                     },
                                     icon: const Icon(
@@ -97,9 +102,13 @@ class ShowFileFromStorageState extends State<ShowFileFromStorage> {
         ));
   }
 
-  addItemToFirestoreCloud() {
-    setState(() {});
+  Future<void> deleteFile(String url) async {
+  try {
+    await FirebaseStorage.instance.refFromURL(url).delete();
+  } catch (e) {
+    print("Error deleting db from cloud: $e");
   }
+}
 
   // Widget dropButtonFormFieldModel() {
   //   return DropdownButtonFormField(
