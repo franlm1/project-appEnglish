@@ -19,7 +19,7 @@ class MenuGaleriaGaleria extends StatefulWidget {
   final String curso;
   final String modulo;
 
-   MenuGaleriaGaleria(this.curso, this.modulo);
+  MenuGaleriaGaleria(this.curso, this.modulo);
   @override
   State<MenuGaleriaGaleria> createState() => MenuGaleriaGaleriaState();
 }
@@ -57,7 +57,7 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
               children: [
                 Expanded(
                   child: FutureBuilder(
-                    future: loadGallery(),
+                    future: loadGallery(widget.curso),
                     builder: (context,
                         AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
@@ -112,8 +112,8 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
                                               ),
                                               IconButton(
                                                 onPressed: () {
-                                                  deleteField();
-                                                  setState(() {});
+                                        	            deleteField(image['id'],widget.modulo);
+		                                                  setState(() {});
                                                 },
                                                 icon: const Icon(
                                                   Icons.delete,
@@ -147,10 +147,10 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
         ));
   }
 
-  Future<void> deleteField() {
+  Future<void> deleteField(String idArchivo,String module) {
     return users
-        .doc('Module 1')
-        .update({'mCLdmmk88DGLXheV4MvG': FieldValue.delete()})
+        .doc(module)
+        .update({idArchivo: FieldValue.delete()})
         .then((value) => print("User's Property Deleted"))
         .catchError(
             (error) => print("Failed to delete user's property: $error"));
@@ -171,16 +171,14 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
     );
   }
 
-  Future<List<Map<String, dynamic>>> loadGallery() async {
+   Future<List<Map<String, dynamic>>> loadGallery(String curso) async {
     List<Map<String, dynamic>> files = [];
-
-    final docRef = firestore.collection("Modulos").doc("Module 1");
-
-    docRef.get().then((DocumentSnapshot doc) {
+    final docRef = firestore.collection("Modulos").doc(widget.modulo);
+      docRef.get().then((DocumentSnapshot doc) {
       final data = doc.data() as Map<String, dynamic>;
       data.forEach((key, value) {
         for (var element in value) {
-          if (element["idCurso"] == widget.curso) {
+          if (element["idCurso"] == curso) {
             files.add({
               'id': key,
               "idCurso": element["idCurso"],
@@ -192,6 +190,13 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
         }
       });
     });
+
+
+
+
+    
+    
+    
 
     return files;
   }

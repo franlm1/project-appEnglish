@@ -13,11 +13,11 @@ class SelectCourseModule extends StatefulWidget {
 
 class _SelectCourseModuleState extends State<SelectCourseModule> {
 
-  final List<String> itemsModulos = ['Modules 1','Modules 2','Modules 3','Modules 4','Modules 5','Modules 6','Modules 7'];
+  final List<String> itemsModulos = ['Module 1','Module 2','Module 3','Module 4','Module 5','Module 6','Module 7'];
   final List<String> itemsCourse = ['Course 1', 'Course 2', 'Course 3', 'Course 4'];
 
   String dropdownValueCourse = 'Course 1';
-  String dropdownValueModule = 'Modules 1';
+  String dropdownValueModule = 'Module 1';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,7 +96,7 @@ class _SelectCourseModuleState extends State<SelectCourseModule> {
 
   Widget dropButtonFormFieldModel() {
     return DropdownButtonFormField(
-      value: 'Modules 1',
+      value: 'Module 1',
       icon: const Icon(Icons.arrow_downward, color: Colors.red),
       elevation: 20,
       style: const TextStyle(color: Colors.red),
