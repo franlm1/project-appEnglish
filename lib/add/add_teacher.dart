@@ -5,13 +5,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tuttorial_1/main.dart';
-import 'package:tuttorial_1/menu/menu_lateral.dart';
-import 'package:tuttorial_1/screens/welcome_screen.dart';
 
+import 'package:tuttorial_1/screens/welcome_screen.dart';
 
 import '../menu/animation_route.dart';
 import '../vista/Frans/MenuControlador.dart';
+
+
+
+
+
 
 void main() => runApp(AddTeacher());
 

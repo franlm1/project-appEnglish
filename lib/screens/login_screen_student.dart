@@ -157,7 +157,7 @@ class _LoginScreenStudentState extends State<LoginScreenStudent> {
           builder: (BuildContext context) {
           return AlertDialog(
           title: new Text("Alert!!"),
-          content: const Text("You are trying to log in as a student but seems you are a teacher!"),
+          content: new Text("You are trying to log in as"),
           actions: <Widget>[
         BackButton(
           onPressed: () {
