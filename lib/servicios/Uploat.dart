@@ -4,10 +4,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 import 'package:image_picker/image_picker.dart';
-import 'package:tuttorial_1/vista/MenuMovil.dart';
+
 
 import '../menu/animation_route.dart';
-import '../vista/MenuControlador.dart';
+import '../vista/Frans/MenuMovil.dart';
 
 class UploatImagen {
   final String tematica;

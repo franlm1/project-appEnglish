@@ -1,4 +1,4 @@
-#Sun May 29 18:58:56 CEST 2022
+#Tue Jun 14 19:54:25 CEST 2022
 base.2=/Users/spainct/Documents/Documents/Projects/App EnglishSpace/project-appEnglish/build/app/intermediates/dex/debug/mergeDexDebug/classes3.dex
 path.2=classes3.dex
 base.1=/Users/spainct/Documents/Documents/Projects/App EnglishSpace/project-appEnglish/build/app/intermediates/dex/debug/mergeDexDebug/classes2.dex

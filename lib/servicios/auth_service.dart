@@ -1,20 +1,50 @@
+/* import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';      
 
 class AuthService {
+ 
 
+ Stream<User> get authStateChanges => _auth.idTokenChanges();
+  
   final FirebaseAuth _auth = FirebaseAuth.instance;
+   Future<String> login(String email, String password) async {
+    try{
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return "Logged In";
+    } catch(e) {
+      return e;
+    }
+  }
+
+  Future<String> signUp(String email, String password, String role) async {
+    try{
+      await _auth.createUserWithEmailAndPassword(email: email, password: password).then((value) async {
+        User? user = FirebaseAuth.instance.currentUser;
+
+        await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
+          'uid': user.uid,
+          'email': email,
+          'password': password,
+          'role': role
+        });
+      });
+      return "Signed Up";
+    } catch(e) {
+      return e;
+    }
+  }
+}
 
   // create user object based on Firebase User
-  User _userFromFirebaseUser(FirebaseUser user){
+/*   User _userFromFirebaseUser(FirebaseUser user){
     return user != null ? User (uid: user.uid): null;
-  }
+  } */
 //sign in with emmail as student
 
 
 //sign out
 
 
-
-}
+ */

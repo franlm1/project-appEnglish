@@ -7,9 +7,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/main.dart';
 import 'package:tuttorial_1/menu/menu_lateral.dart';
-import 'package:tuttorial_1/vista/MenuControlador.dart';
+import 'package:tuttorial_1/screens/welcome_screen.dart';
+
 
 import '../menu/animation_route.dart';
+import '../vista/Frans/MenuControlador.dart';
 
 void main() => runApp(AddAlumno());
 
@@ -21,7 +23,7 @@ class AddAlumno extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Registrar',
       theme: ThemeData(
-        primarySwatch: Colors.pink,
+        primarySwatch: Colors.red,
         brightness: Brightness.light,
       ),
       darkTheme: ThemeData(
@@ -58,7 +60,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
         body: AlumnoForm(),
-        drawer: MenuLateral());
+       );
   }
 }
 
@@ -73,13 +75,17 @@ class AlumnoFormState extends State<AlumnoForm> {
   var password = TextEditingController();
   var name = TextEditingController();
   var apellido = TextEditingController();
-  List<String> spinnerCurso = ['C1', 'C2', 'C3', 'Curso 4'];
+  List<String> spinnerRol = ['Student'];
+  List<String> spinnerCurso = ['Course 1', 'Course 2', 'Course 3', 'Course 4'];
   late String dropdownValueCurso;
+  late String dropdownValueRol;
     @override
   void initState() {
     dropdownValueCurso = spinnerCurso[0];
+    dropdownValueRol = spinnerRol[0];
     super.initState();
   }
+
   
   
   @override
@@ -88,21 +94,6 @@ class AlumnoFormState extends State<AlumnoForm> {
       key: _formKey,
       child: ListView(
         children: [
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
-            child: Column(children: [
-              Card(
-                semanticContainer: true,
-                child: Image.network(
-                  'https://scontent.falc1-1.fna.fbcdn.net/v/t1.18169-9/58675_334588940027861_6571281867888589763_n.png?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=yijQMh_P2tUAX-LfYtY&_nc_ht=scontent.falc1-1.fna&oh=00_AT8l5Kmk7i2FoW27Fvpp8B2aF4aivTFxcefk2mR3h8tpfA&oe=6257FF2E',
-                  fit: BoxFit.fill,
-                ),
-                elevation: 0,
-                margin: const EdgeInsets.all(0),
-              ),
-            ]),
-          ),
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
@@ -205,6 +196,13 @@ class AlumnoFormState extends State<AlumnoForm> {
               controller: password,
             ),
           ),
+             Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+            child: dropCurso(
+           
+            ),
+          ),
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
@@ -222,6 +220,7 @@ class AlumnoFormState extends State<AlumnoForm> {
               child: setUpButtonChild(),
             ),
           ),
+       
         ],
       ),
     );
@@ -237,7 +236,7 @@ class AlumnoFormState extends State<AlumnoForm> {
         style: const TextStyle(color: Colors.red, fontSize: 18),
         underline: Container(
           height: 2,
-          color: Colors.pink,
+          color: Colors.blue,
         ),
         items: spinnerCurso.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
@@ -248,6 +247,30 @@ class AlumnoFormState extends State<AlumnoForm> {
         onChanged: (String? data) {
           setState(() {
             dropdownValueCurso = data!;
+          });
+        });
+  }
+
+   Widget dropRol() {
+    return DropdownButton<String>(
+        value: dropdownValueRol,
+        icon: const Icon(Icons.arrow_drop_down),
+        iconSize: 24,
+        elevation: 16,
+        style: const TextStyle(color: Colors.red, fontSize: 18),
+        underline: Container(
+          height: 2,
+          color: Colors.blue,
+        ),
+        items: spinnerRol.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (String? data) {
+          setState(() {
+            dropdownValueRol = data!;
           });
         });
   }
@@ -279,20 +302,33 @@ class AlumnoFormState extends State<AlumnoForm> {
 
   registrar(BuildContext context) async {
     final _auth = FirebaseAuth.instance;
-    final _firebaseStorageRef = FirebaseStorage.instance;
     final _db = FirebaseFirestore.instance;
+   
 
     // /TODO Implementar email esta en uso.
     await _auth
         .createUserWithEmailAndPassword(
             email: email.text, password: password.text)
         .then((value) {
-      DocumentReference ref = _db.collection('Alumno').doc(email.text);
-      DocumentReference ref2 = _db.collection('Cursos').doc(dropdownValueCurso);
-      ref.set({'Nombre': name.text, 'Apellido': apellido.text});
-      ref2.set({'alumnos': email.text})
+
+            DocumentReference ref1 = _db.collection('Usuarios').doc(email.text);
+            ref1.set({'Nombre': name.text, 'Apellido': apellido.text, 'Email': email.text, 'Rol':dropdownValueRol}).whenComplete(() {
+              
+                DocumentReference ref3 = _db.collection('Alumno').doc(email.text);
+                ref3.set({'Nombre': name.text, 'Apellido': apellido.text}).whenComplete(() { 
+              
+                    DocumentReference ref2 = _db.collection('Cursos').doc(dropdownValueCurso);
+                    ref2.update({'alumnos':FieldValue.arrayUnion([email.text])}).whenComplete(() {
+
+                    });
+                });
+
+            })
+
+        
+
       .then((value) {
-        Navigator.push(context, Animation_route(HomePageMain()))
+        Navigator.push(context, Animation_route(WelcomeScreen()))
             .whenComplete(() => Navigator.of(context).pop());
       });
 
@@ -303,3 +339,36 @@ class AlumnoFormState extends State<AlumnoForm> {
             });
   }
 }
+
+
+
+/*       final alumno = <String, dynamic>{
+          'nombre': name.text,
+          'email':email.text,
+
+
+        };
+        final alumno2 = <String, dynamic>{
+        'alumnos' = alumno
+
+        }; */
+/* 
+
+          final alu = <String, dynamic>{
+          'url': widget.url,
+          'name': widget.nameFile,
+          'idCurso':Modules.nameCourse,
+          'idModulo':Modules.name
+
+        };
+
+        CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+Future<void> deleteField() {
+  return users
+    .doc('ABC123')
+    .update({'age': FieldValue.delete()})
+    .then((value) => print("User's Property Deleted"))
+    .catchError((error) => print("Failed to delete user's property: $error"));
+} */
+ //[{email.text:FieldValue.arrayUnion([])}])})
