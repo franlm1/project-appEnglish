@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/vista/MenuControlador.dart';
-
 import '../../util/animation_route.dart';
 import 'MenuGaleriaGaleria.dart';
 

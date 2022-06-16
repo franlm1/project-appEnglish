@@ -1,15 +1,11 @@
-import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/servicios/loadImages.dart';
 import '../../util/animation_route.dart';
 import 'FormFileFromStorage.dart';
-import 'package:tuttorial_1/vista/MenuControlador.dart';
 import 'package:tuttorial_1/vista/anadir-contenido/MenuThemeSelectFileFromStorage.dart';
-import 'package:video_player/video_player.dart';
+
 
 
 class ShowFileFromStorage extends StatefulWidget {
@@ -110,23 +106,5 @@ class ShowFileFromStorageState extends State<ShowFileFromStorage> {
   }
 }
 
-  // Widget dropButtonFormFieldModel() {
-  //   return DropdownButtonFormField(
-  //     value: 'Modules 1',
-  //     icon: const Icon(Icons.arrow_downward, color: Colors.red),
-  //     elevation: 20,
-  //     style: const TextStyle(color: Colors.red),
-  //     items: itemsModulos.map((itemsModulos) {
-  //       return DropdownMenuItem(
-  //         value: itemsModulos,
-  //         child: Text(itemsModulos),
-  //       );
-  //     }).toList(),
-  //     onChanged: (String? newValue) {
-  //       setState(() {
-  //         dropdownValueModule = newValue!;
-  //       });
-  //     },
-  //   );
-  // }
+
 }

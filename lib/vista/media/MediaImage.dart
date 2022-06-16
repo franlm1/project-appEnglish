@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../util/animation_route.dart';
+import '../MenuControlador.dart';
 import '../galeria/MenuGaleriaGaleria.dart';
 
 
@@ -28,7 +29,7 @@ class _MediaImageState extends State<MediaImage> {
                 ),
                 onTap: () {
                   Navigator.push(context,
-                          Animation_route(MenuGaleriaGaleria("","")))
+                          Animation_route(MenuControlador()))
                       .whenComplete(() => Navigator.of(context).pop());
                 }),
             const SizedBox(width: 10),

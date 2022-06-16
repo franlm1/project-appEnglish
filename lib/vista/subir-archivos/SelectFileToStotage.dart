@@ -21,10 +21,10 @@ class _SelecFileToStorageState extends State<SelecFileToStorage> {
   final titulo = TextEditingController();
   final descripcion = TextEditingController();
   late String pickeFileName = "";
-  String dropdownValue = 'Theme 1';
+  String dropdownValue = 'Grammar';
   PlatformFile? pickedFile;
 
-  final List<String> itemsTheme = ['Theme 1', 'Theme 2', 'Theme 3', 'Theme 4'];
+  final List<String> itemsTheme = ['Grammar', 'Vocabulary', 'Pronunciation', 'Listening'];
 
   Future uploadFile() async {
     if (pickedFile != null) {
@@ -114,7 +114,7 @@ class _SelecFileToStorageState extends State<SelecFileToStorage> {
 
   Widget dropButtonFormField() {
     return DropdownButtonFormField(
-      value: 'Theme 1',
+      value: 'Grammar',
       icon: const Icon(Icons.arrow_downward, color: Colors.red),
       elevation: 20,
       style: const TextStyle(color: Colors.red),

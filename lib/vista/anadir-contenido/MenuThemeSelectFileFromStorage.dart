@@ -60,9 +60,7 @@ class MenuStorageState extends State<MenuStorage_> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   
   late CollectionReference mainCollection;
-  String tipo = "Videos";
-  int selectedIndex = 0;
-  int index = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +73,7 @@ class MenuStorageState extends State<MenuStorage_> {
             padding: const EdgeInsets.all(10.0),
             child: ListView(
               children: [
+              //  'Grammar', 'Vocabulary', 'Pronunciation', 'Listening'
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton.icon(
@@ -82,11 +81,11 @@ class MenuStorageState extends State<MenuStorage_> {
                           Navigator.push(
                                   context,
                                   Animation_route(
-                                      const ShowFileFromStorage('Theme 1')))
+                                      const ShowFileFromStorage('Grammar')))
                               .whenComplete(() => Navigator.of(context).pop());
                         },
                         icon: const Icon(Icons.library_add),
-                        label: const Text('THEME 1'))),
+                        label: const Text('Grammar'))),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton.icon(
@@ -94,11 +93,11 @@ class MenuStorageState extends State<MenuStorage_> {
                           Navigator.push(
                                   context,
                                   Animation_route(
-                                      const ShowFileFromStorage('Theme 2')))
+                                      const ShowFileFromStorage('Vocabulary')))
                               .whenComplete(() => Navigator.of(context).pop());
                         },
                         icon: const Icon(Icons.library_add),
-                        label: const Text('THEME 2'))),
+                        label: const Text('Vocabulary'))),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton.icon(
@@ -106,11 +105,11 @@ class MenuStorageState extends State<MenuStorage_> {
                           Navigator.push(
                                   context,
                                   Animation_route(
-                                      const ShowFileFromStorage('Theme 3')))
+                                      const ShowFileFromStorage('Pronunciation')))
                               .whenComplete(() => Navigator.of(context).pop());
                         },
                         icon: const Icon(Icons.library_add),
-                        label: const Text('THEME 3'))),
+                        label: const Text('Pronunciation'))),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton.icon(
@@ -118,11 +117,11 @@ class MenuStorageState extends State<MenuStorage_> {
                           Navigator.push(
                                   context,
                                   Animation_route(
-                                      const ShowFileFromStorage('Theme 4')))
+                                      const ShowFileFromStorage('Listening')))
                               .whenComplete(() => Navigator.of(context).pop());
                         },
                         icon: const Icon(Icons.library_add),
-                        label: const Text('THEME 4'))),
+                        label: const Text('Listening'))),
               ],
             ),
           ),
@@ -131,30 +130,4 @@ class MenuStorageState extends State<MenuStorage_> {
     );
   }
 
-  int? _selectedValueIndex = 1;
-  Widget button({required String text, required int index}) {
-    return InkWell(
-      splashColor: Colors.cyanAccent,
-      onTap: () {
-        setState(() {
-          _selectedValueIndex = index;
-          if (index == 1) {
-            tipo = "Videos";
-          } else {
-            tipo = "Archivos";
-          }
-        });
-      },
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        color: index == _selectedValueIndex ? Colors.red : Colors.white,
-        child: Text(
-          text,
-          style: TextStyle(
-            color: index == _selectedValueIndex ? Colors.white : Colors.black,
-          ),
-        ),
-      ),
-    );
-  }
 }

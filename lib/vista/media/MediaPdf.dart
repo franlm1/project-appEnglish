@@ -2,6 +2,7 @@
 
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
+import 'package:tuttorial_1/vista/MenuControlador.dart';
 import 'package:tuttorial_1/vista/galeria/MenuGaleriaGaleria.dart';
 import '../../util/animation_route.dart';
 
@@ -42,7 +43,7 @@ class _MediaPdfState extends State<MediaPdf> {
                 ),
                 onTap: () {
                   Navigator.push(context,
-                          Animation_route(MenuGaleriaGaleria("","")))
+                          Animation_route(MenuControlador()))
                       .whenComplete(() => Navigator.of(context).pop());
                 }),
             const SizedBox(width: 10),

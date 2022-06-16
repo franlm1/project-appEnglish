@@ -1,16 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:tuttorial_1/servicios/loadImages.dart';
 import 'package:tuttorial_1/vista/galeria/SelectCurseModule.dart';
 import 'package:tuttorial_1/vista/media/MediaPdf.dart';
 import 'package:tuttorial_1/vista/media/MediaPlayer.dart';
-
-
-import 'package:tuttorial_1/vista/anadir-contenido/MenuThemeSelectFileFromStorage.dart';
 import 'package:video_player/video_player.dart';
-
-
 import '../../util/animation_route.dart';
 import '../media/MediaImage.dart';
 
@@ -34,6 +27,7 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    
         appBar: AppBar(
           title: Text('STORAGE GALLERY MENU'),
           automaticallyImplyLeading: false,
@@ -51,9 +45,14 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(0),
           child: Container(
-            child: Column(
+                decoration: const BoxDecoration(
+                image: DecorationImage(
+        image: AssetImage('assets/flag.png'),
+        fit: BoxFit.cover),
+              ),
+                        child: Column(
               children: [
                 Expanded(
                   child: FutureBuilder(
@@ -66,65 +65,78 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
                           itemBuilder: (context, index) {
                             final Map<String, dynamic> image =
                                 snapshot.data![index];
-
-                            controller =
-                                VideoPlayerController.network(image['url']);
-                            _initializeVideoPlayerFuture =
-                                controller.initialize();
-                            controller.setLooping(true);
+                                controller =
+                                    VideoPlayerController.network(image['url']);
+                                    _initializeVideoPlayerFuture =
+                                    controller.initialize();
+                                    controller.setLooping(true);
 
                             return Center(
-                              child: Container(
-                                height: 100,
-                                child: Card(
-                                  semanticContainer: true,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(30.0)),
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: ListTile(
-                                          dense: false,
-                                          leading: showImageVideo(image['url']),
-                                          title: Text(image['name']),
-                                          trailing: Row(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                
+                                  child: Card(
+
+                                        elevation: 10,
+                                        semanticContainer: true,
+                                        shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(30.0)),
+                                        margin:const EdgeInsets.symmetric(vertical: 10),
+                                        child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              IconButton(
-                                                onPressed: () {
-                                                  if (image['url'].contains('mp4')){
-                                                    Navigator.push(context,Animation_route(MediaPlayer(image['url']))).whenComplete(() =>Navigator.of(context).pop());
-                                                  } else if (image['url'].contains('jpg') ||image['url'].contains('png')){ 
-                                                    Navigator.push(context,Animation_route(MediaImage(image['url']))).whenComplete(() =>Navigator.of(context).pop());
-                                                  } else if (image['url'].contains('pdf')){
-                                                    Navigator.push(context,Animation_route(MediaPdf(image['url']))).whenComplete(() =>Navigator.of(context).pop());
-                                                  }
-                                                },
-                                                icon: const Icon(
-                                                  Icons.arrow_right_alt_sharp,
-                                                  color: Colors.red,
+                                                 Padding(
+                                                   padding: const EdgeInsets.all(20.0),
+                                                   child: Container(
+                                                            height: 100.0,
+                                                            width: 200.0,
+                                                            child: image['url'].contains('pdf')
+                                                                ? Image(image: AssetImage('assets/english.png'))
+                                                                : image['url'].contains('mp4')
+                                                                    ? VideoPlayer(controller)
+                                                                    : Image.network(image['url']),
+                                                          ),
+                                                 ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: ListTile(
+                                                          dense: false,
+                                                          //  leading: showImageVideo(image['url']),
+                                                          title: Text(image['name']),
+                                                          trailing: Row(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: [
+                                                              IconButton(
+                                                                onPressed: () {
+                                                                  if (image['url'].contains('mp4')){
+                                                                    Navigator.push(context,Animation_route(MediaPlayer(image['url']))).whenComplete(() =>Navigator.of(context).pop());
+                                                                  } else if (image['url'].contains('jpg') ||image['url'].contains('png')){ 
+                                                                    Navigator.push(context,Animation_route(MediaImage(image['url']))).whenComplete(() =>Navigator.of(context).pop());
+                                                                  } else if (image['url'].contains('pdf')){
+                                                                    Navigator.push(context,Animation_route(MediaPdf(image['url']))).whenComplete(() =>Navigator.of(context).pop());
+                                                                  }
+                                                                },
+                                                                icon: const Icon(
+                                                                  Icons.arrow_right_alt_sharp,
+                                                                  color: Colors.red,
+                                                                ),
+                                                              ),
+                                                              IconButton(
+                                                                onPressed: () {
+                                                                      deleteField(image['id'],widget.modulo);
+                                                                      setState(() {});
+                                                                },
+                                                                icon: const Icon(
+                                                                  Icons.delete,
+                                                                  color: Colors.red,
+                                                                ),
+                                                              ),
+                                                          ],
+                                                          ),
                                                 ),
-                                              ),
-                                              IconButton(
-                                                onPressed: () {
-                                        	            deleteField(image['id'],widget.modulo);
-		                                                  setState(() {});
-                                                },
-                                                icon: const Icon(
-                                                  Icons.delete,
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -190,14 +202,6 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
         }
       });
     });
-
-
-
-
-    
-    
-    
-
     return files;
   }
 }

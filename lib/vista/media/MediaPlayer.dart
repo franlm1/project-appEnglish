@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:tuttorial_1/vista/galeria/MenuGaleriaGaleria.dart';
 import 'package:video_player/video_player.dart';
 import '../../util/animation_route.dart';
+import '../MenuControlador.dart';
 
 class MediaPlayer extends StatefulWidget {
   final String url;
@@ -56,7 +57,7 @@ class _MediaPlayerState extends State<MediaPlayer> {
               ),
               onTap: () {
                 Navigator.push(
-                        context, Animation_route(MenuGaleriaGaleria("", "")))
+                        context, Animation_route(MenuControlador()))
                     .whenComplete(() => Navigator.of(context).pop());
               }),
           const SizedBox(width: 10),

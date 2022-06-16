@@ -109,16 +109,6 @@ class _MenuMovil_State extends State<FormFileFromStorage> {
         icon: const Icon(Icons.library_add),
         label: const Text('Gallery'));
   }
-  addItemToFirestoreCloud() {
-    Map<String, dynamic> cad = {"titulo": "", "url": ""};
-
-    firestore.doc('Modulos/' + Modules.nameCourse).set({
-      "widget.tipo": FieldValue.arrayUnion([cad])
-    }, SetOptions(merge: true));
-
-    setState(() {});
-  }
-
 
   Future uploadFile() async {
       if (widget.nameFile != "Select a file") {
@@ -127,7 +117,10 @@ class _MenuMovil_State extends State<FormFileFromStorage> {
           'name': widget.nameFile,
           'idCurso':Modules.nameCourse,
           'idModulo':Modules.name
+
         };
+
+        
     
         try {
             DocumentReference documentCurso = firestore.collection('Cursos').doc(Modules.nameCourse);
@@ -167,7 +160,7 @@ class _MenuMovil_State extends State<FormFileFromStorage> {
    }
   }
 
-  //TODO *********************************
+
   Future<void> showMyDialog() async {
     return showDialog<void>(
       context: context,

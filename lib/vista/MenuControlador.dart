@@ -27,7 +27,7 @@ class MenuControlador extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('STORAGE GALLERY MENU'),
+          title: Text(''),
           automaticallyImplyLeading: false,
           actions: [
             InkWell(
