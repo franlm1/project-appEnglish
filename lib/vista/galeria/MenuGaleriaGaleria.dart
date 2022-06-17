@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/vista/galeria/SelectCurseModule.dart';
 import 'package:tuttorial_1/vista/media/MediaPdf.dart';
@@ -11,8 +12,9 @@ import '../media/MediaImage.dart';
 class MenuGaleriaGaleria extends StatefulWidget {
   final String curso;
   final String modulo;
+  final bool student;
 
-  MenuGaleriaGaleria(this.curso, this.modulo);
+  MenuGaleriaGaleria(this.curso, this.modulo, this.student);
   @override
   State<MenuGaleriaGaleria> createState() => MenuGaleriaGaleriaState();
 }
@@ -24,6 +26,13 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
   late Future<void> _initializeVideoPlayerFuture;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+@override
+  void initState() {
+
+    super.initState(
+
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +47,7 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
                   color: Colors.white,
                 ),
                 onTap: () {
-                  Navigator.push(context, Animation_route(SelectCourseModule()))
+                  Navigator.push(context, Animation_route(SelectCourseModule(widget.curso,widget.student)))
                       .whenComplete(() => Navigator.of(context).pop());
                 }),
             const SizedBox(width: 10),
@@ -86,6 +95,7 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                                  Padding(
+                                                  
                                                    padding: const EdgeInsets.all(20.0),
                                                    child: Container(
                                                             height: 100.0,
@@ -184,11 +194,18 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
   }
 
    Future<List<Map<String, dynamic>>> loadGallery(String curso) async {
+
     List<Map<String, dynamic>> files = [];
-    final docRef = firestore.collection("Modulos").doc(widget.modulo);
+
+    final docRef =  firestore.collection("Modulos").doc(widget.modulo);
+
       docRef.get().then((DocumentSnapshot doc) {
+      
       final data = doc.data() as Map<String, dynamic>;
-      data.forEach((key, value) {
+     
+        
+
+    data.forEach((key, value) async {
         for (var element in value) {
           if (element["idCurso"] == curso) {
             files.add({
@@ -201,7 +218,12 @@ class MenuGaleriaGaleriaState extends State<MenuGaleriaGaleria> {
           }
         }
       });
-    });
+    
+          });
+          setState(() {
+            
+          });
+  
     return files;
   }
 }

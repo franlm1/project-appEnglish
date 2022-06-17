@@ -13,9 +13,13 @@ class LoadImagen {
   LoadImagen.c();
   
   Future<List<Map<String, dynamic>>> loadStorage() async {
+
     List<Map<String, dynamic>> files = [];
+
     result = await storage.ref().child(this.theme).list();
+    
     final List<Reference> allFiles = result.items;
+    
     await Future.forEach<Reference>(allFiles, (file) async {
       final String name = await file.name;
       final String fileUrl = await file.getDownloadURL();
@@ -33,9 +37,13 @@ class LoadImagen {
 
 
   Future<List<Map<String, dynamic>>> loadCloud() async {
+
     List<Map<String, dynamic>> files = [];
+
     final docRef = firestore.collection("Modulos").doc("Module 1");
+
     docRef.get().then((DocumentSnapshot doc) {
+
       final data = doc.data() as Map<String, dynamic>;
       data.forEach((key, value) {
         for (var element in value) {

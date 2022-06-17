@@ -1,10 +1,18 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuttorial_1/vista/MenuControlador.dart';
 import '../../util/animation_route.dart';
 import 'MenuGaleriaGaleria.dart';
-
+import 'package:restart_app/restart_app.dart';
 class SelectCourseModule extends StatefulWidget {
-  const SelectCourseModule({ Key? key }) : super(key: key);
+  final String cursoStudent;
+  late  bool studen;
+
+
+SelectCourseModule(this.cursoStudent, this.studen );
 
   @override
   State<SelectCourseModule> createState() => _SelectCourseModuleState();
@@ -14,9 +22,18 @@ class _SelectCourseModuleState extends State<SelectCourseModule> {
 
   final List<String> itemsModulos = ['Module 1','Module 2','Module 3','Module 4','Module 5','Module 6','Module 7'];
   final List<String> itemsCourse = ['Course 1', 'Course 2', 'Course 3', 'Course 4'];
+  
 
   String dropdownValueCourse = 'Course 1';
   String dropdownValueModule = 'Module 1';
+  @override
+  void initState() {
+    if(widget.studen==false){
+        save();
+    }
+      
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,8 +47,11 @@ class _SelectCourseModuleState extends State<SelectCourseModule> {
                   color: Colors.white,
                 ),
                 onTap: () {
-                  Navigator.push(context, Animation_route(MenuControlador()))
+                  if(widget.studen!=false){
+                        Navigator.push(context, Animation_route(MenuControlador()))
                       .whenComplete(() => Navigator.of(context).pop());
+                  }
+                
                 }),
             const SizedBox(width: 10),
           ],
@@ -40,6 +60,7 @@ class _SelectCourseModuleState extends State<SelectCourseModule> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
+              
                const Center(
                   child: Padding(
                     padding: EdgeInsets.all(30.0),
@@ -52,7 +73,10 @@ class _SelectCourseModuleState extends State<SelectCourseModule> {
                   width: 400.0,
                   child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: dropButtonFormFieldCourse()),
+                      child:   Visibility(
+                  visible: widget.studen, // bool
+                  child: dropButtonFormFieldCourse() , // widget to show/hide
+                ),),
                 )),
                 SizedBox(
                     child: Container(
@@ -67,6 +91,21 @@ class _SelectCourseModuleState extends State<SelectCourseModule> {
                   child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: elevatedButton()),
+                )),
+                  SizedBox(
+                    child: Container(
+                  width: 400.0,
+                  child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Visibility(
+                  visible: widget.studen ? widget.studen :true, // bool
+                  child: ElevatedButton.icon(
+                    onPressed: (){
+                    SystemNavigator.pop();
+                    }, 
+                    icon: const Icon(Icons.exit_to_app),
+                   label: const Text('EXIT')), // widget to show/hide
+                ),),
                 )),
               ]),
         );
@@ -116,10 +155,21 @@ class _SelectCourseModuleState extends State<SelectCourseModule> {
   Widget elevatedButton() {
     return ElevatedButton.icon(
         onPressed: () {
-             Navigator.push(context, Animation_route(MenuGaleriaGaleria(dropdownValueCourse,dropdownValueModule)))
+             Navigator.push(context, Animation_route(MenuGaleriaGaleria(dropdownValueCourse,dropdownValueModule,widget.studen)))
                         .whenComplete(() => Navigator.of(context).pop());
         },
         icon: const Icon(Icons.library_add),
         label: const Text('SELECT'));
   }
+    Future<void> save() async {
+    // Obtain shared preferences.
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('student', widget.studen);
+        await prefs.setString('course', widget.cursoStudent);
+        
+        widget.studen= prefs.getBool('student')!;
+        dropdownValueCourse = prefs.getString('course')!;
+    }
+      
+
 }

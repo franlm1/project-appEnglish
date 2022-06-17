@@ -2,9 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tuttorial_1/vista/anadir-contenido/MenuThemeSelectFileFromStorage.dart';
 import 'package:tuttorial_1/vista/galeria/SelectCurseModule.dart';
+import 'package:tuttorial_1/vista/registrar-usuario/add_teacher.dart';
 import 'package:tuttorial_1/vista/subir-archivos/SelectFileToStotage.dart';
 import '../util/animation_route.dart';
 import 'anadir-contenido/FormFileFromStorage.dart';
+import 'registrar-usuario/add_alumno.dart';
 
 //MENU PRINCIPAL
 void main() async {
@@ -36,9 +38,7 @@ class MenuControlador extends StatelessWidget {
                   color: Colors.white,
                 ),
                 onTap: () {
-                  Navigator.push(context,
-                          Animation_route(MenuThemeSelectFileFromStorage()))
-                      .whenComplete(() => Navigator.of(context).pop());
+              
                 }),
             const SizedBox(width: 10),
           ],
@@ -87,7 +87,7 @@ class _bodyState extends State<body> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton.icon(
                   onPressed: () {
-                    Navigator.push(context, Animation_route(SelectCourseModule()))
+                    Navigator.push(context, Animation_route(SelectCourseModule('',true)))
                         .whenComplete(() => Navigator.of(context).pop());
                   },
                   icon: const Icon(Icons.rectangle_outlined),
@@ -97,9 +97,25 @@ class _bodyState extends State<body> {
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                     Navigator.push(context, Animation_route(AddAlumno()))
+                        .whenComplete(() => Navigator.of(context).pop());
+                  },
                   icon: const Icon(Icons.person),
-                  label: const Text('REGISTRAR USUARIOS'))),
+                  label: const Text('REGISTRAR STUDENT'))
+          ),
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton.icon(
+                  onPressed: () {
+                     Navigator.push(context, Animation_route(AddTeacher()))
+                        .whenComplete(() => Navigator.of(context).pop());
+                  },
+                  icon: const Icon(Icons.person),
+                  label: const Text('REGISTRAR TEACHER'))
+          ),
+                  
+        
         ],
       ),
     );
