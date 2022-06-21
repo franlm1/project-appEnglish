@@ -141,8 +141,13 @@ class _LoginScreenStudentState extends State<LoginScreenStudent> {
 
  
    print(datos.toString().split(','));
-   var role = datos.toString().split(',');
-   print(role[3].contains("Student"));
+   var datosString = datos.toString().split(',');
+   print(datosString[4].contains("Student"));
+   print(datosString[1].contains("Course 1"));
+   print(datosString[1].contains("Course 2"));
+   print(datosString[1].contains("Course 3"));
+   print(datosString[1].contains("Course 4"));
+   var course = datosString[1];
 
    
 

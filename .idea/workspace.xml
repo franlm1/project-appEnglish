@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbe745c5-f4fc-4270-8b6f-ff114f833d9b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/project-appEnglish.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/project-appEnglish.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/add/add_alumno.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/add/add_alumno.dart" afterDir="false" />
-    </list>
+    <list default="true" id="dbe745c5-f4fc-4270-8b6f-ff114f833d9b" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,5 +55,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
